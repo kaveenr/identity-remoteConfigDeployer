@@ -31,8 +31,9 @@ public class GitDemo {
             while ((line = buffer.readLine()) != null) {
                 System.out.println(line);
             }
+            System.out.println(repo.getLastModified());
         }catch (Exception e){
-            logger.error("Repo Checkout Error");
+            logger.error("Repository Checkout Error");
         }
     }
 }
