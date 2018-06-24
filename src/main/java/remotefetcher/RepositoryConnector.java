@@ -6,6 +6,6 @@ import java.util.Date;
 
 public interface RepositoryConnector {
     public void pullRepository() throws Exception;
-    public InputStream getFile(File location);
+    public InputStream getFile(File location) throws Exception;
     public Date getLastModified();
 }
