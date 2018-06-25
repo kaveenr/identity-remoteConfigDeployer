@@ -16,7 +16,7 @@ public class GitDemo {
         RepositoryConnector repo = new GitRepositoryConnector("areas","https://github.com/kaveenr/sri-lanka-district-area.json.git","master");
         File target = new File("locs.json");
         try {
-            repo.pullRepository();
+            repo.fetchRepository();
         } catch (Exception e){
             logger.error("Cloning Error");
         }

@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 public interface RepositoryConnector {
-    public void pullRepository() throws Exception;
+    public void fetchRepository() throws Exception;
     public InputStream getFile(File location) throws Exception;
     public Date getLastModified() throws Exception;
 }

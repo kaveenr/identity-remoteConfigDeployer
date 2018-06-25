@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PullCommand;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -29,6 +31,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
     private String name = "";
     public File repoPath;
     private Repository repo;
+    private Git git;
 
     public GitRepositoryConnector(String name, String uri,String branch){
         this.name = name;
@@ -58,19 +61,31 @@ public class GitRepositoryConnector implements RepositoryConnector {
                 .build();
     }
 
+    private void pullRepository() throws Exception{
+        PullCommand pullRequest = this.git.pull();
+        try {
+            pullRequest.call();
+        } catch (GitAPIException e){
+            throw new Exception("Local Repository pull failed");
+        }
+    }
+
     private RevCommit getLastCommit(ObjectReader reader) throws Exception{
         RevWalk walk = new RevWalk(reader);
         ObjectId lastCommitId = this.repo.resolve(Constants.HEAD);
         return walk.parseCommit(lastCommitId);
     }
 
-    public void pullRepository() throws Exception {
+    public void fetchRepository() throws Exception {
         if (this.repoPath.exists() && this.repoPath.isDirectory()){
             logger.info("Found local repository");
             this.repo = this.getLocalRepository();
+            this.git = new Git(this.repo);
+            this.pullRepository();
         }else {
             logger.info("Cloning repository from remote");
             this.repo = this.cloneRepository();
+            this.git = new Git(this.repo);
         }
     }
 
