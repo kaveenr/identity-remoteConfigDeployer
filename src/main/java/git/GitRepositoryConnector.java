@@ -1,18 +1,14 @@
 package git;
 
-import javafx.scene.shape.Path;
 import org.apache.log4j.Logger;
 
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -32,7 +28,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
     private String uri = "";
     private String branch = "";
     private String name = "";
-    public File repoPath;
+    private File repoPath;
     private Repository repo;
     private Git git;
 
@@ -42,6 +38,15 @@ public class GitRepositoryConnector implements RepositoryConnector {
         this.uri = uri;
         this.repoPath = new File(System.getProperty("java.io.tmpdir") + this.name);
         logger.info("Repository directory set to " + this.repoPath.getAbsolutePath());
+        try {
+            if (this.repoPath.exists() && this.repoPath.isDirectory()){
+                logger.info("Found local repository");
+                this.repo = this.getLocalRepository();
+                this.git = new Git(this.repo);
+            }
+        } catch (Exception e) {
+            logger.info("Exception setting local repository");
+        }
     }
 
     private Repository cloneRepository() throws Exception {
@@ -83,9 +88,6 @@ public class GitRepositoryConnector implements RepositoryConnector {
 
     public void fetchRepository() throws Exception {
         if (this.repoPath.exists() && this.repoPath.isDirectory()){
-            logger.info("Found local repository");
-            this.repo = this.getLocalRepository();
-            this.git = new Git(this.repo);
             this.pullRepository();
         }else {
             logger.info("Cloning repository from remote");
