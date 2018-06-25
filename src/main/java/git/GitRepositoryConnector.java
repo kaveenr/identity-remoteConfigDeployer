@@ -1,5 +1,6 @@
 package git;
 
+import javafx.scene.shape.Path;
 import org.apache.log4j.Logger;
 
 import org.eclipse.jgit.api.CloneCommand;
@@ -19,8 +20,10 @@ import remotefetcher.RepositoryConnector;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class GitRepositoryConnector implements RepositoryConnector {
 
@@ -71,10 +74,11 @@ public class GitRepositoryConnector implements RepositoryConnector {
         }
     }
 
-    private RevCommit getLastCommit(ObjectReader reader) throws Exception{
-        RevWalk walk = new RevWalk(reader);
-        ObjectId lastCommitId = this.repo.resolve(Constants.HEAD);
-        return walk.parseCommit(lastCommitId);
+    private RevCommit getLastCommit(ObjectReader reader, File path) throws Exception{
+        List<RevCommit> log = new ArrayList<RevCommit>();
+        Iterable<RevCommit> logIterater = git.log().addPath(path.getPath()).call();
+        logIterater.forEach(log::add);
+        return log.get(0);
     }
 
     public void fetchRepository() throws Exception {
@@ -92,7 +96,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
 
     public InputStream getFile(File location) throws Exception{
         ObjectReader reader = this.repo.newObjectReader();
-        RevCommit commit = this.getLastCommit(reader);
+        RevCommit commit = this.getLastCommit(reader,location);
 
         try {
             TreeWalk treewalk = TreeWalk.forPath(this.repo,location.getPath(),commit.getTree());
@@ -106,10 +110,10 @@ public class GitRepositoryConnector implements RepositoryConnector {
         return null;
     }
 
-    public Date getLastModified() throws Exception{
+    public Date getLastModified(File location) throws Exception{
         try {
             ObjectReader reader = this.repo.newObjectReader();
-            RevCommit commit = getLastCommit(reader);
+            RevCommit commit = getLastCommit(reader,location);
             return new Date((long) commit.getCommitTime() * 1000); //UNIX timestamp to seconds
         }catch (Exception e){
             throw new Exception("Repository I/O exception");
