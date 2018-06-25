@@ -1,6 +1,6 @@
 package remotefetchDemo;
 
-import github.GitRepositoryConnector;
+import git.GitRepositoryConnector;
 import remotefetcher.RepositoryConnector;
 import org.apache.log4j.Logger;
 
@@ -13,7 +13,7 @@ public class GitDemo {
     final static Logger logger = Logger.getLogger(GitDemo.class);
 
     public static void main(String[] params){
-        RepositoryConnector repo = new GitRepositoryConnector("areas","https://github.com/kaveenr/sri-lanka-district-area.json.git","master");
+        RepositoryConnector repo = new GitRepositoryConnector("areas","https://git.com/kaveenr/sri-lanka-district-area.json.git","master");
         File target = new File("locs.json");
         try {
             repo.fetchRepository();
@@ -31,7 +31,7 @@ public class GitDemo {
             while ((line = buffer.readLine()) != null) {
                 System.out.println(line);
             }
-            System.out.println(repo.getLastModified());
+            System.out.println("Last modified " + repo.getLastModified());
         }catch (Exception e){
             logger.error("Repository Checkout Error");
         }

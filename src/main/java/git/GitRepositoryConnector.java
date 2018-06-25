@@ -1,4 +1,4 @@
-package github;
+package git;
 
 import org.apache.log4j.Logger;
 
@@ -65,6 +65,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
         PullCommand pullRequest = this.git.pull();
         try {
             pullRequest.call();
+            logger.info("Pulling changes from remote");
         } catch (GitAPIException e){
             throw new Exception("Local Repository pull failed");
         }
