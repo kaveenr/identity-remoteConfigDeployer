@@ -71,7 +71,7 @@ public class PollingActionHandler implements ActionHandler, Runnable {
                     logger.info("Unable to read modify date of " + path.getPath());
                 }
                 if (this.revisionDate.containsKey(file) && currentRevision != null){
-                    if (this.revisionDate.get(file).before(currentRevision) || true){
+                    if (this.revisionDate.get(file).before(currentRevision)){
                         logger.info("Deploying " + file.getPath());
                         try {
                             deployer.deploy(repo.getFile(file));

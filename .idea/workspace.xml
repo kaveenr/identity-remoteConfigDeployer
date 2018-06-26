@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4b67df60-ef0b-47f3-9323-3f9e92fbdb7f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/remotefetchDemo/GitDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/remotefetchDemo/GitDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/remotefetcher/RepositoryConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/remotefetcher/RepositoryConnector.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -35,7 +31,7 @@
       <file leaf-file-name="GitRepositoryConnector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
+            <state relative-caret-position="2295">
               <caret line="153" selection-start-line="153" selection-end-line="153" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -47,8 +43,8 @@
       <file leaf-file-name="PollingActionHandler.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="73" column="79" lean-forward="true" selection-start-line="73" selection-start-column="79" selection-end-line="73" selection-end-column="79" />
+            <state relative-caret-position="388">
+              <caret line="73" column="75" selection-start-line="73" selection-start-column="75" selection-end-line="73" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -128,8 +124,8 @@
         <option value="$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java" />
         <option value="$PROJECT_DIR$/src/main/java/remotefetchDemo/GitDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" />
-        <option value="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/git/SoutConfigDeployer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" />
       </list>
     </option>
   </component>
@@ -542,26 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="64" selection-start-line="11" selection-start-column="64" selection-end-line="11" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/remotefetcher/ConfigDeployer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -592,10 +568,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="64" selection-start-line="11" selection-start-column="64" selection-end-line="11" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2295">
+          <caret line="153" selection-start-line="153" selection-end-line="153" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1095">
-          <caret line="73" column="79" lean-forward="true" selection-start-line="73" selection-start-column="79" selection-end-line="73" selection-end-column="79" />
+        <state relative-caret-position="388">
+          <caret line="73" column="75" selection-start-line="73" selection-start-column="75" selection-end-line="73" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
