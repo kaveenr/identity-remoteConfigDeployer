@@ -12,6 +12,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import remotefetcher.RepositoryConnector;
 
 import java.io.File;
@@ -126,6 +128,35 @@ public class GitRepositoryConnector implements RepositoryConnector {
             return new Date((long) commit.getCommitTime() * 1000); //UNIX timestamp to seconds
         }catch (Exception e){
             throw new Exception("Repository I/O exception");
+        }
+    }
+
+    public List<File> listFiles(File root) throws Exception{
+        List<File> availableFiles =  new ArrayList<>();
+
+        TreeWalk treeWalk = new TreeWalk(this.repo);
+        TreeFilter pathFilter = PathFilter.create(root.getPath());
+
+        try {
+            treeWalk.addTree(this.getLastCommit(root).getTree());
+        }catch (Exception e){
+            throw new Exception("Unable to get Latest Commit for path");
+        }
+
+        treeWalk.setRecursive(false);
+        treeWalk.setFilter(pathFilter);
+
+        try {
+            while (treeWalk.next()) {
+                if (treeWalk.isSubtree()) {
+                    treeWalk.enterSubtree();
+                } else {
+                    availableFiles.add(new File(treeWalk.getPathString()));
+                }
+            }
+            return availableFiles;
+        } catch (IOException e){
+            throw new Exception("Exception on traversing for give path");
         }
     }
 }

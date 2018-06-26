@@ -21,7 +21,9 @@ public class GitDemo {
         RepositoryConnector repo = new GitRepositoryConnector("demo","https://EnigmaMaker@bitbucket.org/EnigmaMaker/is-git-import-demo.git","master");
 
         HashMap<File, ConfigDeployer> deployer_config = new HashMap<>();
-        deployer_config.put(new File("service_providers/dummy.xml"), new SoutConfigDeployer());
+
+        deployer_config.put(new File("service_providers/"), new SoutConfigDeployer());
+        deployer_config.put(new File("identity_providers/"), new SoutConfigDeployer());
 
         ActionHandler pollingHandler = new PollingActionHandler(repo, deployer_config);
         pollingHandler.main();

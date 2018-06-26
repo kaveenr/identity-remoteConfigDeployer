@@ -8,6 +8,8 @@ import remotefetcher.RepositoryConnector;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PollingActionHandler implements ActionHandler, Runnable {
 
@@ -15,6 +17,7 @@ public class PollingActionHandler implements ActionHandler, Runnable {
 
     private RepositoryConnector repo;
     private HashMap<File, ConfigDeployer> directoryMap;
+    private Map<File,Date> revisionDate = new HashMap<>();
 
     // Keeps last deployed revision date of each file
     private HashMap<File,Date> revisionDates = new HashMap<>();
@@ -32,8 +35,13 @@ public class PollingActionHandler implements ActionHandler, Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            this.directoryMap.forEach((file,deployer) -> {
-                this.pollDirectory(file,deployer);
+            try {
+                this.repo.fetchRepository();
+            } catch (Exception e){
+                logger.info("Error pulling repository");
+            }
+            this.directoryMap.forEach((directory,deployer) -> {
+                this.pollDirectory(directory,deployer);
             });
             try{
                 Thread.sleep(1000 * (long) 60);
@@ -44,30 +52,35 @@ public class PollingActionHandler implements ActionHandler, Runnable {
         }
     }
 
-    private void pollDirectory(File file, ConfigDeployer deployer){
-        logger.info("Polling repository");
-        Date currentRevision = null;
+    private void pollDirectory(File path, ConfigDeployer deployer){
+        logger.info("Polling Directory " + path.getPath() + " for changes");
+        List<File> configFiles = null;
+
         try {
-            repo.fetchRepository();
-        } catch (Exception e){
-            logger.info("Error pulling repository");
+            configFiles = this.repo.listFiles(path);
+        }catch (Exception e){
+            logger.info("Error listing files in root");
         }
-        try {
-            currentRevision = repo.getLastModified(file);
-        } catch (Exception e){
-            logger.info("I/O Error reading attributes");
-        }
-        if (revisionDates.containsKey(file) && currentRevision != null){
-            if(revisionDates.get(file).before(currentRevision)) {
-                logger.info("Repository change detected");
+
+        if (configFiles != null){
+            for (File file: configFiles) {
+                Date currentRevision = null;
                 try {
-                    deployer.deploy(repo.getFile(file));
-                } catch (Exception e) {
-                    logger.info("Error Deploying " + deployer.getClass());
+                    currentRevision = this.repo.getLastModified(file);
+                }catch (Exception e){
+                    logger.info("Unable to read modify date of " + path.getPath());
                 }
-                revisionDates.put(file,currentRevision);
-            }else {
-                logger.info("No changes detected");
+                if (this.revisionDate.containsKey(file) && currentRevision != null){
+                    if (this.revisionDate.get(file).before(currentRevision) || true){
+                        logger.info("Deploying " + file.getPath());
+                        try {
+                            deployer.deploy(repo.getFile(file));
+                        } catch (Exception e){
+                            logger.info("Error Deploying "+ file.getName());
+                        }
+                    }
+                }
+                this.revisionDate.put(file,currentRevision);
             }
         }
     }
