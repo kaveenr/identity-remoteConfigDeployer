@@ -18,10 +18,10 @@ public class GitDemo {
     final static Logger logger = Logger.getLogger(GitDemo.class);
 
     public static void main(String[] params){
-        RepositoryConnector repo = new GitRepositoryConnector("areas","https://git.com/kaveenr/sri-lanka-district-area.json.git","master");
+        RepositoryConnector repo = new GitRepositoryConnector("demo","https://EnigmaMaker@bitbucket.org/EnigmaMaker/is-git-import-demo.git","master");
 
         HashMap<File, ConfigDeployer> deployer_config = new HashMap<>();
-        deployer_config.put(new File("locs.json"), new SoutConfigDeployer());
+        deployer_config.put(new File("service_providers/dummy.xml"), new SoutConfigDeployer());
 
         ActionHandler pollingHandler = new PollingActionHandler(repo, deployer_config);
         pollingHandler.main();

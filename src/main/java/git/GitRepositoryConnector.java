@@ -15,6 +15,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import remotefetcher.RepositoryConnector;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +24,6 @@ import java.util.List;
 
 public class GitRepositoryConnector implements RepositoryConnector {
 
-    final static Logger logger = Logger.getLogger(GitRepositoryConnector.class);
-
     private String uri = "";
     private String branch = "";
     private String name = "";
@@ -32,12 +31,17 @@ public class GitRepositoryConnector implements RepositoryConnector {
     private Repository repo;
     private Git git;
 
+    static final Logger logger = Logger.getLogger(GitRepositoryConnector.class);
+
     public GitRepositoryConnector(String name, String uri,String branch){
         this.name = name;
         this.branch = branch;
         this.uri = uri;
         this.repoPath = new File(System.getProperty("java.io.tmpdir") + this.name);
+
         logger.info("Repository directory set to " + this.repoPath.getAbsolutePath());
+
+        // Check if repo path exists, if so load as local repo
         try {
             if (this.repoPath.exists() && this.repoPath.isDirectory()){
                 logger.info("Found local repository");
@@ -50,13 +54,13 @@ public class GitRepositoryConnector implements RepositoryConnector {
     }
 
     private Repository cloneRepository() throws Exception {
-        CloneCommand clone_request = Git.cloneRepository()
+        CloneCommand cloneRequest = Git.cloneRepository()
                 .setURI(this.uri)
                 .setDirectory(this.repoPath)
                 .setBranchesToClone(Arrays.asList(branch))
                 .setBranch(this.branch);
         try {
-            return clone_request.call().getRepository();
+            return cloneRequest.call().getRepository();
         } catch (Exception e){
             throw new Exception("Clone Exception");
         }
@@ -79,8 +83,8 @@ public class GitRepositoryConnector implements RepositoryConnector {
         }
     }
 
-    private RevCommit getLastCommit(ObjectReader reader, File path) throws Exception{
-        List<RevCommit> log = new ArrayList<RevCommit>();
+    private RevCommit getLastCommit(File path) throws Exception{
+        List<RevCommit> log = new ArrayList<>();
         Iterable<RevCommit> logIterater = git.log().addPath(path.getPath()).call();
         logIterater.forEach(log::add);
         return log.get(0);
@@ -97,25 +101,28 @@ public class GitRepositoryConnector implements RepositoryConnector {
     }
 
     public InputStream getFile(File location) throws Exception{
-        ObjectReader reader = this.repo.newObjectReader();
-        RevCommit commit = this.getLastCommit(reader,location);
 
-        try {
-            TreeWalk treewalk = TreeWalk.forPath(this.repo,location.getPath(),commit.getTree());
+        try (ObjectReader reader = this.repo.newObjectReader()){
+            RevCommit commit = this.getLastCommit(location);
+            try {
+                TreeWalk treewalk = TreeWalk.forPath(this.repo,location.getPath(),commit.getTree());
 
-            if (treewalk != null) {
-                return reader.open(treewalk.getObjectId(0)).openStream();
+                if (treewalk != null) {
+                    return reader.open(treewalk.getObjectId(0)).openStream();
+                }
+            } catch (Exception e ){
+                throw new Exception("File checkout exception");
             }
-        } catch (Exception e ){
-            throw new Exception("File checkout exception");
+
+        }catch (IOException e){
+            throw new Exception("I/O Exception");
         }
         return null;
     }
 
     public Date getLastModified(File location) throws Exception{
         try {
-            ObjectReader reader = this.repo.newObjectReader();
-            RevCommit commit = getLastCommit(reader,location);
+            RevCommit commit = getLastCommit(location);
             return new Date((long) commit.getCommitTime() * 1000); //UNIX timestamp to seconds
         }catch (Exception e){
             throw new Exception("Repository I/O exception");
