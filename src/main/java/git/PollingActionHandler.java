@@ -13,16 +13,15 @@ import java.util.Map;
 
 public class PollingActionHandler implements ActionHandler, Runnable {
 
-    final static Logger logger = Logger.getLogger(PollingActionHandler.class);
+    static final Logger logger = Logger.getLogger(PollingActionHandler.class);
 
     private RepositoryConnector repo;
-    private HashMap<File, ConfigDeployer> directoryMap;
-    private Map<File,Date> revisionDate = new HashMap<>();
+    private Map<File, ConfigDeployer> directoryMap;
 
     // Keeps last deployed revision date of each file
-    private HashMap<File,Date> revisionDates = new HashMap<>();
+    private Map<File,Date> revisionDates = new HashMap<>();
 
-    public PollingActionHandler(RepositoryConnector repo, HashMap<File, ConfigDeployer> directoryMap) {
+    public PollingActionHandler(RepositoryConnector repo, Map<File, ConfigDeployer> directoryMap) {
         this.repo = repo;
         this.directoryMap = directoryMap;
     }
@@ -34,21 +33,23 @@ public class PollingActionHandler implements ActionHandler, Runnable {
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
+        while (true) {
             try {
                 this.repo.fetchRepository();
             } catch (Exception e){
                 logger.info("Error pulling repository");
             }
-            this.directoryMap.forEach((directory,deployer) -> {
-                this.pollDirectory(directory,deployer);
-            });
+
+            this.directoryMap.forEach(this::pollDirectory);
+
             try{
                 Thread.sleep(1000 * (long) 60);
             }catch (InterruptedException e){
                 logger.info("Polling loop interrupted");
                 Thread.currentThread().interrupt();
             }
+
+            if (Thread.currentThread().isInterrupted()) break;
         }
     }
 
@@ -70,17 +71,16 @@ public class PollingActionHandler implements ActionHandler, Runnable {
                 }catch (Exception e){
                     logger.info("Unable to read modify date of " + path.getPath());
                 }
-                if (this.revisionDate.containsKey(file) && currentRevision != null){
-                    if (this.revisionDate.get(file).before(currentRevision)){
-                        logger.info("Deploying " + file.getPath());
-                        try {
-                            deployer.deploy(repo.getFile(file));
-                        } catch (Exception e){
-                            logger.info("Error Deploying "+ file.getName());
-                        }
+                if (this.revisionDates.containsKey(file) && currentRevision != null
+                        && this.revisionDates.get(file).before(currentRevision)){
+                    logger.info("Deploying " + file.getPath());
+                    try {
+                        deployer.deploy(repo.getFile(file));
+                    } catch (Exception e){
+                        logger.info("Error Deploying "+ file.getName());
                     }
                 }
-                this.revisionDate.put(file,currentRevision);
+                this.revisionDates.put(file,currentRevision);
             }
         }
     }
