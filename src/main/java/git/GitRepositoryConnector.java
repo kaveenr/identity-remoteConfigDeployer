@@ -134,7 +134,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
     }
 
     @Override
-    public String getFileHash(File location) throws Exception {
+    public String getRevisionHash(File location) throws Exception {
         try {
             RevCommit rc = this.getLastCommit(location);
             return rc.getName();
