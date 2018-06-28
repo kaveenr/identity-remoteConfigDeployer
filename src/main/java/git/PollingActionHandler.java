@@ -63,6 +63,7 @@ public class PollingActionHandler implements ActionHandler, Runnable {
         try {
             configFiles = this.repo.listFiles(path);
         }catch (Exception e){
+            e.printStackTrace();
             logger.info("Error listing files in root");
         }
 

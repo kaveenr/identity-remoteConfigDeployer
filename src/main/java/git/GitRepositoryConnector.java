@@ -7,10 +7,10 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
 
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
@@ -149,11 +149,9 @@ public class GitRepositoryConnector implements RepositoryConnector {
         TreeWalk treeWalk = new TreeWalk(this.repo);
         TreeFilter pathFilter = PathFilter.create(root.getPath());
 
-        try {
-            treeWalk.addTree(this.getLastCommit(root).getTree());
-        }catch (Exception e){
-            throw new Exception("Unable to get Latest Commit for path");
-        }
+        RevWalk revWalk = new RevWalk(this.repo);
+        ObjectId headRef = this.repo.resolve(Constants.HEAD);
+        treeWalk.addTree(revWalk.parseCommit(headRef).getTree());
 
         treeWalk.setRecursive(false);
         treeWalk.setFilter(pathFilter);
@@ -164,6 +162,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
                     treeWalk.enterSubtree();
                 } else {
                     availableFiles.add(new File(treeWalk.getPathString()));
+                    System.out.println(treeWalk.getPathString());
                 }
             }
             return availableFiles;
