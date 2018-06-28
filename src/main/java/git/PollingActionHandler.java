@@ -17,6 +17,7 @@ public class PollingActionHandler implements ActionHandler, Runnable {
 
     private RepositoryConnector repo;
     private Map<File, ConfigDeployer> directoryMap;
+    private Integer frequency =  60;
 
     // Keeps last deployed revision date of each file
     private Map<File,Date> revisionDates = new HashMap<>();
@@ -43,7 +44,9 @@ public class PollingActionHandler implements ActionHandler, Runnable {
             this.directoryMap.forEach(this::pollDirectory);
 
             try{
-                Thread.sleep(1000 * (long) 60);
+                Integer seconds = this.frequency;
+                logger.info("Sleeping for " + seconds +" seconds");
+                Thread.sleep(1000 * (long) seconds);
             }catch (InterruptedException e){
                 logger.info("Polling loop interrupted");
                 Thread.currentThread().interrupt();

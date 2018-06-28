@@ -6,6 +6,7 @@ import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -50,12 +51,12 @@ public class GitRepositoryConnector implements RepositoryConnector {
                 this.repo = this.getLocalRepository();
                 this.git = new Git(this.repo);
             }
-        } catch (Exception e) {
-            logger.info("Exception setting local repository");
+        } catch (IOException e) {
+            logger.info("IOException setting local repository, will be cloned");
         }
     }
 
-    private Repository cloneRepository() throws Exception {
+    private Repository cloneRepository() throws IllegalArgumentException, IOException {
         CloneCommand cloneRequest = Git.cloneRepository()
                 .setURI(this.uri)
                 .setDirectory(this.repoPath)
@@ -63,13 +64,14 @@ public class GitRepositoryConnector implements RepositoryConnector {
                 .setBranch(this.branch);
         try {
             return cloneRequest.call().getRepository();
-        } catch (Exception e){
-            throw new Exception("Clone Exception");
+        } catch (InvalidRemoteException e){
+            throw new IllegalArgumentException("Supplied Remote is invalid",e);
+        } catch (GitAPIException e){
+            throw new IOException("Error Cloning repository",e);
         }
-
     }
 
-    private Repository getLocalRepository() throws Exception {
+    private Repository getLocalRepository() throws IOException {
         FileRepositoryBuilder localBuilder = new FileRepositoryBuilder();
         return localBuilder.findGitDir(this.repoPath)
                 .build();
@@ -93,7 +95,7 @@ public class GitRepositoryConnector implements RepositoryConnector {
     }
 
     public void fetchRepository() throws Exception {
-        if (this.repoPath.exists() && this.repoPath.isDirectory()){
+        if (this.git != null){
             this.pullRepository();
         }else {
             logger.info("Cloning repository from remote");
