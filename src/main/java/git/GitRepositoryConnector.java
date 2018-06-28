@@ -162,7 +162,6 @@ public class GitRepositoryConnector implements RepositoryConnector {
                     treeWalk.enterSubtree();
                 } else {
                     availableFiles.add(new File(treeWalk.getPathString()));
-                    System.out.println(treeWalk.getPathString());
                 }
             }
             return availableFiles;

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4b67df60-ef0b-47f3-9323-3f9e92fbdb7f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -31,8 +30,8 @@
       <file leaf-file-name="GitRepositoryConnector.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="153" column="63" selection-start-line="153" selection-start-column="63" selection-end-line="153" selection-end-column="63" />
+            <state relative-caret-position="351">
+              <caret line="164" selection-start-line="164" selection-end-line="164" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -836,8 +835,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="153" column="63" selection-start-line="153" selection-start-column="63" selection-end-line="153" selection-end-column="63" />
+        <state relative-caret-position="351">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
