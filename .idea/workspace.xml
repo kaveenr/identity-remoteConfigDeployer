@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b67df60-ef0b-47f3-9323-3f9e92fbdb7f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -16,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RepositoryConnector.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RepositoryConnector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+            <state relative-caret-position="210">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -28,7 +27,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GitDemo.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GitDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/demo/GitDemo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
@@ -40,10 +39,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="PollingActionHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="57" column="52" selection-start-line="57" selection-start-column="52" selection-end-line="57" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HashMap.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="1288" selection-start-line="1288" selection-end-line="1288" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="GitRepositoryConnector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
+            <state relative-caret-position="-69">
               <caret line="136" column="33" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -107,9 +127,9 @@
         <option value="$PROJECT_DIR$/src/main/java/demo/GitDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/remotefetcher/ConfigDeployer.java" />
         <option value="$PROJECT_DIR$/src/main/java/git/SoutConfigDeployer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java" />
         <option value="$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java" />
+        <option value="$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java" />
       </list>
     </option>
   </component>
@@ -151,7 +171,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="1027" />
@@ -326,7 +346,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="1001" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -339,11 +359,11 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="6" weight="0.32967034" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3296582" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33938706" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3296582" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26190478" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.34652665" />
       <window_info anchor="bottom" id="SonarLint" weight="0.3296582" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -378,16 +398,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/demo/GitDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="23" column="55" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -732,16 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-20">
-          <caret line="60" column="38" lean-forward="true" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/git/SoutConfigDeployer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -777,10 +777,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/demo/GitDemo.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+        <state relative-caret-position="210">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -789,7 +789,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/git/GitRepositoryConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
+        <state relative-caret-position="-69">
           <caret line="136" column="33" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -797,10 +797,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/remotefetcher/RepositoryConnector.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        <state relative-caret-position="194">
+          <caret line="1288" selection-start-line="1288" selection-end-line="1288" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/git/PollingActionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="52" selection-start-line="57" selection-start-column="52" selection-end-line="57" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/demo/GitDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -6,10 +6,7 @@ import remotefetcher.ConfigDeployer;
 import remotefetcher.RepositoryConnector;
 
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PollingActionHandler implements ActionHandler, Runnable {
 
@@ -41,6 +38,7 @@ public class PollingActionHandler implements ActionHandler, Runnable {
                 logger.info("Error pulling repository");
             }
 
+            if(this.revisionDates.size() == 0) this.seedExistingFiles(directoryMap.keySet());
             this.directoryMap.forEach(this::pollDirectory);
 
             try{
@@ -56,6 +54,23 @@ public class PollingActionHandler implements ActionHandler, Runnable {
         }
     }
 
+    private void seedExistingFiles(Set<File> paths){
+        logger.info("Seeding Existing file revisions");
+        paths.forEach((File path) -> {
+            List<File> configFiles = null;
+            try {
+                configFiles = this.repo.listFiles(path);
+            }catch (Exception e){
+                logger.info("Error listing files in path for seeding");
+            }
+            if (configFiles != null){
+                configFiles.forEach((File configFile) -> {
+                    this.revisionDates.put(configFile,null);
+                });
+            }
+        });
+    }
+
     private void pollDirectory(File path, ConfigDeployer deployer){
         logger.info("Polling Directory " + path.getPath() + " for changes");
         List<File> configFiles = null;
@@ -63,7 +78,6 @@ public class PollingActionHandler implements ActionHandler, Runnable {
         try {
             configFiles = this.repo.listFiles(path);
         }catch (Exception e){
-            e.printStackTrace();
             logger.info("Error listing files in root");
         }
 
@@ -75,15 +89,28 @@ public class PollingActionHandler implements ActionHandler, Runnable {
                 }catch (Exception e){
                     logger.info("Unable to read modify date of " + path.getPath());
                 }
-                if (this.revisionDates.containsKey(file) && currentRevision != null
-                        && this.revisionDates.get(file).before(currentRevision)){
-                    logger.info("Deploying " + file.getPath());
+
+                // Is this file a new addition, if so deploy now or else check revisions
+                if (this.revisionDates.containsKey(file)){
+                    Date previousRevision = this.revisionDates.get(file);
+                    if (currentRevision != null && previousRevision != null
+                            && previousRevision.before(currentRevision)){
+                        logger.info("Deploying " + file.getPath());
+                        try {
+                            deployer.deploy(repo.getFile(file));
+                        } catch (Exception e){
+                            logger.info("Error Deploying "+ file.getName());
+                        }
+                    }
+                }else{
+                    logger.info("Deploying new file " + file.getPath());
                     try {
                         deployer.deploy(repo.getFile(file));
                     } catch (Exception e){
                         logger.info("Error Deploying "+ file.getName());
                     }
                 }
+
                 this.revisionDates.put(file,currentRevision);
             }
         }
